@@ -1,32 +1,32 @@
 public class Trip {
-    private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
+    private Request request1;
+    private Request request2;
     private double beneficio;
 
-    public Trip(Coordinate firstCoordinate, Coordinate secondCoordinate, double beneficio) {
-        this.firstCoordinate = firstCoordinate;
-        this.secondCoordinate = secondCoordinate;
+    public Trip(Request request1, Request request2, double beneficio) {
+        this.request1 = request1;
+        this.request2 = request2;
         this.beneficio = beneficio;
     }
 
-    public void setFirstCoordinate(Coordinate firstCoordinate) {
-        this.firstCoordinate = firstCoordinate;
+    public void setRequest1(Request request1) {
+        this.request1 = request1;
     }
 
-    public void setSecondCoordinate(Coordinate secondCoordinate) {
-        this.secondCoordinate = secondCoordinate;
+    public void setRequest2(Request request2) {
+        this.request2 = request2;
     }
 
     public void setBeneficio(double beneficio) {
         this.beneficio = beneficio;
     }
 
-    public Coordinate getFirstCoordinate() {
-        return firstCoordinate;
+    public Coordinate getRequest1() {
+        return request1;
     }
 
-    public Coordinate getSecondCoordinate() {
-        return secondCoordinate;
+    public Coordinate getRequest2() {
+        return request2;
     }
 
     public double getBeneficio() {
