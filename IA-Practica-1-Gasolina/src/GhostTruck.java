@@ -6,7 +6,7 @@ public class GhostTruck extends Truck {
 
     @Override
     public double getTotalProfit() {
-        return 0;
+        return 0.0;
     }
 
 

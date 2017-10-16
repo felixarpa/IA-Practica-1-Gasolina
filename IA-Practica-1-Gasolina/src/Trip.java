@@ -1,12 +1,10 @@
 public class Trip {
     private Request request1;
     private Request request2;
-    private double beneficio;
 
-    public Trip(Request request1, Request request2, double beneficio) {
+    public Trip(Request request1, Request request2) {
         this.request1 = request1;
         this.request2 = request2;
-        this.beneficio = beneficio;
     }
 
     public void setRequest1(Request request1) {
@@ -17,19 +15,21 @@ public class Trip {
         this.request2 = request2;
     }
 
-    public void setBeneficio(double beneficio) {
-        this.beneficio = beneficio;
-    }
-
-    public Coordinate getRequest1() {
+    public Request getRequest1() {
         return request1;
     }
 
-    public Coordinate getRequest2() {
+    public Request getRequest2() {
         return request2;
     }
 
-    public double getBeneficio() {
-        return beneficio;
+    public double getProfit(Coordinate truckCoordinate) {
+        double profit1 = request1.calculateProfit();
+        double profit2 = request2.calculateProfit();
+        int distance1 = Coordinate.distance(truckCoordinate, request1.getCoordinate());
+        int distance2 = Coordinate.distance(request1.getCoordinate(), request2.getCoordinate());
+        int distance3 = Coordinate.distance(request2.getCoordinate(), truckCoordinate);
+        double loss = (distance1 + distance2 + distance3) * 2;
+        return profit1 + profit2 - loss;
     }
 }
