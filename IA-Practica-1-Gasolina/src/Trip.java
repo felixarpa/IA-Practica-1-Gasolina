@@ -7,6 +7,10 @@ public class Trip {
         this.request2 = request2;
     }
 
+    public Trip(){
+
+    }
+
     public void setRequest1(Request request1) {
         this.request1 = request1;
     }
