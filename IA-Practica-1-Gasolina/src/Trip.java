@@ -7,12 +7,26 @@ public class Trip {
         this.request2 = request2;
     }
 
+    public Trip(){
+
+    }
+
     public void setRequest1(Request request1) {
         this.request1 = request1;
     }
 
     public void setRequest2(Request request2) {
         this.request2 = request2;
+    }
+
+    public Request getRequest(int req) {
+        switch (req) {
+            case 1:
+                return request1;
+            case 2:
+                return request2;
+        }
+        return null;
     }
 
     public Request getRequest1() {
