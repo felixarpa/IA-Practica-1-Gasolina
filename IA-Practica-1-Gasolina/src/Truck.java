@@ -28,6 +28,7 @@ public class Truck {
                 kmLeft -= distance;
                 tripsLeft -= 1;
                 trips.add(trip);
+                return true;
             }
         }
         return false;

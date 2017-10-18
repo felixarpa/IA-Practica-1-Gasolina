@@ -1,4 +1,5 @@
 import IA.Gasolina.CentrosDistribucion;
+import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
 
@@ -18,14 +19,13 @@ public class State {
     public static State initialState(CentrosDistribucion centrosDistribucion, Gasolineras gasolineras) {
         State stateReturn = new State();
 
-        for (int i = 0; i < centrosDistribucion.size(); ++i){
-            Coordinate origin = new Coordinate(centrosDistribucion.get(i).getCoordX(),
-                    centrosDistribucion.get(i).getCoordY());
+        for (Distribucion distribucion : centrosDistribucion){
+            Coordinate origin = new Coordinate(distribucion.getCoordX(), distribucion.getCoordY());
             Truck truck = new Truck(origin);
             stateReturn.trucks.add(truck);
         }
 
-        int truckIterator = 0;
+        int truckIterator = 0; // iterates when truck can't handle more requests
         int requestNumber = 0;
         for (Gasolinera gasolinera : gasolineras) {
             Coordinate coordinate = new Coordinate(gasolinera.getCoordX(), gasolinera.getCoordY());
@@ -41,9 +41,9 @@ public class State {
                         trip.setRequest2(request);
                         requestNumber = 0;
                         boolean error = stateReturn.trucks.get(truckIterator).addTrip(trip);
-                        if (error){
-                            ++truckIterator;
-                            if (truckIterator == stateReturn.trucks.size()){
+                        if (error){ //violated restricction
+                            ++truckIterator; //try next truck
+                            if (truckIterator == stateReturn.trucks.size()){ //No more trucks
                                 GhostTruck ghostTruck = new GhostTruck(new Coordinate(0, 0)); //not ideal, will do unnecesary computations
                                 stateReturn.addTruck(ghostTruck);
                             }
