@@ -1,0 +1,92 @@
+\documentclass{report}
+\usepackage[latin1]{inputenc}
+\usepackage[spanish]{babel}
+
+\title{Búsqueda local}
+\author{
+  Arribas Pardo, Fèlix\\
+  \texttt{felix.arribas@est.fib.upc.edu}
+  \and
+  Williams Corral, David\\
+  \texttt{david.george.williams@est.fib.upc.edu}
+  \and
+  García Fuentes, Raul\\
+  \texttt{raul.garcia.fuentes@est.fib.upc.edu}
+}
+\date{}
+
+\begin{document}
+ 
+\maketitle
+
+\tableofcontents
+
+\chapter{Descripción del problema}
+
+\section{Problema} %Identificación del problema
+
+En éste problema queremos crear una lista de peticiones diaria para una empresa de abastecimiento de gasolineras, así éstas pueden seguir funcionando correctamente. Las peticiones son enviadas por las gasolineras.
+
+En una jornada de ocho horas la empresa tiene que cumplir el máximo de peticiones generando el \textbf{beneficio máximo}, \textbf{pérdidas mínimas} y el \textbf{mínimo de kilómetros recorridos}, ya que esto supone una perdida.
+
+Tenemos el \textbf{número de centros} $n$ de distribución de combustible y su posición, y el conjunto de $m$ \textbf{gasolineras} que han hecho una petición. Es decir, podemos encontrar la distancia que hay entre las gasolineras que han enviado solicitud y el centro de abastecimiento que las puede atender. Los $n$ centros se tienen que conectar con las $m$ gasolineras necesitadas.
+
+Teniendo en cuenta que $n$ y $m$ son valores muy grandes y que $n < m$, vemos que hay infinitas combinaciones diferentes y es logísticamente imposible cumplir con todas las peticiones que se mandan. Hay que encontrar la \textbf{mejor solución}, la que ofrezca más beneficio a la empresa.
+
+Una vez identificado el problema, para saber encontrar la solución tenemos que analizar las características a fondo.
+
+\subsection{Características}
+
+Todo el problema se desarrolla en un área cuadrada de $100\times100$ kilómetros. Tanto los centros de abastecimiento como las gasolineras ofrecen unas coordenadas para situarlas en este mapa.
+
+La empresa dispone de varios centros de abastecimiento cada uno de éstos dispone de \textbf{un camión}. Los camiones se desplazan a 80km/h y las paradas para abastecer gasolineras o para cargar cisternas en el centro supondremos que duran 0h. Por lo tanto, sabiendo que las jornadas son de ocho horas y que el camión circula a 80km/h, en un día éste puede recorrer $80km/h\times8h=640km$.
+
+Los camiones no solo están restringidos por los kilómetros que pueden recorrer si no también por el número de viajes: \textbf{5 viajes} como máximo. Y, obviamente, tiene un limite de cisternas que pueden transportar, que es 2.
+
+Una cisterna abastece una sola petición, así que el máximo de peticiones que puede atender un camión en un día son $5\ viajes \times 2\ cisternas = 10\ peticiones$. Siempre y cuando no superen los 640 kilómetros recorridos.
+
+A todo esto hay que añadir un factor más: Los días de retraso de cada petición. Como hemos explicado al principio el probl
+
+El problema empieza con una lista de peticiones, algunas de días anteriores y otras del mismo día. Por cada día que pasa sin abastecer una gasolinera se pierde dinero o se gana menos de lo previsto, siguiendo esta función matemática:
+
+\[ \% precio = (100 - 2^{dias}) \%\]
+\[Para\ dias = 0\ partimos\ del\ 102\%\]
+
+Por lo tanto, en un principio será mejor abastecer primero las gasolineras que hicieron la petición hace días que no las que acaban de hacerla. Es importante tener en cuenta que se supone que las peticiones que no se cumplen durante la jornada que representa el problema (durante todo el día) se cumplirán el día siguiente.
+
+También hay que tener en cuenta que los camiones que abastecen a las gasolineras consumen por cada kilómetro recorrido, por eso los kilómetros recorridos suponen una pérdida y queremos minimizar los kilómetros recorridos. Asumiremos que el coste por kilómetro es 2.
+
+Las gasolineras y los centros de abastecimiento disponibles representados con coordenadas geográficas en una cuadrícula de 100 x 100 km$^2$. La distancia entre una gasolinera y un centro se calcula con la fórmula:
+
+\[d(D,G)=\mid Dx-Gx\mid +\mid Dy-Gy\mid \]
+
+ a la empresa, situadas en un punto de un área determinada.
+
+
+\subsection{Tipo de problema} %Búsqueda local
+%Elementos del estado
+
+\section{Estado} %Estado del problema y representación
+\subsection{Elementos del estado}
+\subsection{Espacio de búsqueda}
+
+\section{Operadores} %Representación y análisis de los operadores
+%Operadores uno por uno (+elección)
+\subsection{Factor de ramificación}
+
+\section{Función heurística} %Análisis de ls función heurística
+\subsection{Factores que intervienen}
+
+\section{Estado inicial} %Elección y generación del estado inicial
+
+\chapter{Experimentos}
+%Cada section es un experimento.
+	%Influencia de la solución inicial
+	%Influencia de los operadores
+	%Influencia de la función haurística
+	%Comparación de algoritmos
+	%Escenarios propuestos y preguntas del enunciado
+
+
+  
+\end{document}
