@@ -12,6 +12,10 @@ public class State {
         this.trucks = new ArrayList<>();
     }
 
+    public State(ArrayList<Truck> trucks) {
+        this.trucks = new ArrayList<>(trucks);
+    }
+
     private void addTruck(Truck truck){
         trucks.add(truck);
     }
@@ -44,7 +48,7 @@ public class State {
                         if (error){ //violated restricction
                             ++truckIterator; //try next truck
                             if (truckIterator == stateReturn.trucks.size()){ //No more trucks
-                                GhostTruck ghostTruck = new GhostTruck(new Coordinate(0, 0)); //not ideal, will do unnecesary computations
+                                GhostTruck ghostTruck = new GhostTruck(new Coordinate(0, 0));
                                 stateReturn.addTruck(ghostTruck);
                             }
                             stateReturn.trucks.get(truckIterator).addTrip(trip); //adding trips to ghosttucks
@@ -57,11 +61,23 @@ public class State {
         return stateReturn;
     }
 
+    public void swapRequest(int truck1, int trip1, int req1, int truck2, int trip2, int req2) {
+        Request request1 = trucks.get(truck1).getTripAt(trip1).getRequest(req1);
+        Request request2 = trucks.get(truck2).getTripAt(trip2).getRequest(req2);
+
+
+    }
+
     public double getTotalProfit() {
         double totalProfit = 0.0;
         for(Truck truck : trucks) {
             totalProfit += truck.getTotalProfit();
         }
         return totalProfit;
+    }
+
+    public State copy(){
+        State aux = new State(this.trucks);
+        return aux;
     }
 }

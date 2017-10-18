@@ -20,6 +20,10 @@ public class Truck {
         this.origin = origin;
     }
 
+    public Trip getTripAt(int index) {
+        return trips.get(index);
+    }
+
     // Returns false if truck can't do an more trips
     public boolean addTrip (Trip trip){
         if (tripsLeft > 5) {
@@ -41,4 +45,5 @@ public class Truck {
         }
         return totalProfit;
     }
+
 }
