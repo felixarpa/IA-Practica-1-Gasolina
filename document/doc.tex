@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{article}
 \usepackage[latin1]{inputenc}
 \usepackage[spanish]{babel}
 
@@ -21,9 +21,9 @@
 
 \tableofcontents
 
-\chapter{Descripción del problema}
+\section{Descripción del problema}
 
-\section{Problema} %Identificación del problema
+\subsection{Problema} %Identificación del problema
 
 En éste problema queremos crear una lista de peticiones diaria para una empresa de abastecimiento de gasolineras, así éstas pueden seguir funcionando correctamente. Las peticiones son enviadas por las gasolineras.
 
@@ -35,7 +35,7 @@ Teniendo en cuenta que $n$ y $m$ son valores muy grandes y que $n < m$, vemos qu
 
 Una vez identificado el problema, para saber encontrar la solución tenemos que analizar las características a fondo.
 
-\subsection{Características}
+\subsubsection{Características}
 
 Todo el problema se desarrolla en un área cuadrada de $100\times100$ kilómetros. Tanto los centros de abastecimiento como las gasolineras ofrecen unas coordenadas para situarlas en este mapa.
 
@@ -45,41 +45,41 @@ Los camiones no solo están restringidos por los kilómetros que pueden recorrer s
 
 Una cisterna abastece una sola petición, así que el máximo de peticiones que puede atender un camión en un día son $5\ viajes \times 2\ cisternas = 10\ peticiones$. Siempre y cuando no superen los 640 kilómetros recorridos.
 
-A todo esto hay que añadir un factor más: Los días de retraso de cada petición. Como hemos explicado al principio el probl
-
-El problema empieza con una lista de peticiones, algunas de días anteriores y otras del mismo día. Por cada día que pasa sin abastecer una gasolinera se pierde dinero o se gana menos de lo previsto, siguiendo esta función matemática:
+A todo esto hay que añadir un factor más: Los días de retraso de cada petición. Como hemos explicado al principio el problema sucede en una día. Las peticiones que recibe la empresa pueden ser del mismo día o de días anteriores. Se empieza con una lista de peticiones, algunas de días anteriores y otras del mismo día. Por cada día que pasa sin abastecer una gasolinera se pierde dinero o se gana menos de lo previsto, siguiendo esta función matemática:
 
 \[ \% precio = (100 - 2^{dias}) \%\]
 \[Para\ dias = 0\ partimos\ del\ 102\%\]
 
-Por lo tanto, en un principio será mejor abastecer primero las gasolineras que hicieron la petición hace días que no las que acaban de hacerla. Es importante tener en cuenta que se supone que las peticiones que no se cumplen durante la jornada que representa el problema (durante todo el día) se cumplirán el día siguiente.
+En el caso en que la solicitud se haya hecho el mismo día el precio será el 102\%. El precio de una cisterna es de 1000 euros. En un principio será mejor abastecer primero las gasolineras que hicieron la petición hace días que no las que acaban de hacerla. Es importante tener en cuenta que se supone que las peticiones que no se cumplen durante la jornada que representa el problema se cumplirán el día siguiente.
 
-También hay que tener en cuenta que los camiones que abastecen a las gasolineras consumen por cada kilómetro recorrido, por eso los kilómetros recorridos suponen una pérdida y queremos minimizar los kilómetros recorridos. Asumiremos que el coste por kilómetro es 2.
+Por último, la distancia entre centro y gasolinera también importa. No solo porque se pueda superar el límite de kilómetros recorridos por un camión en un día (640km) si no porque asumiremos un coste por kilómetro recorrido: 2 euros por kilómetro recorrido. Para poder saber la distancia que se recorre se usará la siguiente fórmula para encontrar los kilómetros entre el punto $A$ i $B$:
 
-Las gasolineras y los centros de abastecimiento disponibles representados con coordenadas geográficas en una cuadrícula de 100 x 100 km$^2$. La distancia entre una gasolinera y un centro se calcula con la fórmula:
+\[d(A,B)=\mid A_{x}-B_{x}\mid +\mid A_{y}-B_{y}\mid \]
 
-\[d(D,G)=\mid Dx-Gx\mid +\mid Dy-Gy\mid \]
+\subsubsection{Tipo de problema} %Búsqueda local
 
- a la empresa, situadas en un punto de un área determinada.
+Podemos definir este problema como un problema de \textbf{búsqueda local}. Cada combinación diferente de peticiones repartidas entre los diferentes centros de abastecimiento tiene sus propias características y esta relacionado con las demás situaciones. En cada una de estas combinaciones se puede formular un cálculo que se puede como la calidad de esa solución.
 
+A partir de las relaciones y las diferentes formas que se pueden combinar las peticiones con los centros, podemos aplicar \textbf{operadores} para cambiar de un \textbf{estado} a otro. Al aplicar una sola operación se puede volver a calcular la calidad de la solución y saber si ese cambio vale la pena o no.
 
-\subsection{Tipo de problema} %Búsqueda local
+Por lo tanto, en este problema tenemos diferentes \textbf{estados}, de los cuales obtenemos un valor numérico aplicando una \textbf{función heurística} para saber su \emph{calidad}, y al que podemos aplicar distintos cambios o \textbf{operadores} para cambiar a un estado nuevo, más cerca o más lejos del estado óptimo o \textbf{estado solución}. Todo esto partiendo de un \textbf{estado inicial} totalmente aleatorio o pensado previamente para que supuestamente esté mas cerca del estado solución.
+
 %Elementos del estado
 
-\section{Estado} %Estado del problema y representación
-\subsection{Elementos del estado}
-\subsection{Espacio de búsqueda}
+\subsection{Estado} %Estado del problema y representación
+\subsubsection{Elementos del estado}
+\subsubsection{Espacio de búsqueda}
 
-\section{Operadores} %Representación y análisis de los operadores
+\subsection{Operadores} %Representación y análisis de los operadores
 %Operadores uno por uno (+elección)
-\subsection{Factor de ramificación}
+\subsubsection{Factor de ramificación}
 
-\section{Función heurística} %Análisis de ls función heurística
-\subsection{Factores que intervienen}
+\subsection{Función heurística} %Análisis de ls función heurística
+\subsubsection{Factores que intervienen}
 
-\section{Estado inicial} %Elección y generación del estado inicial
+\subsection{Estado inicial} %Elección y generación del estado inicial
 
-\chapter{Experimentos}
+\section{Experimentos}
 %Cada section es un experimento.
 	%Influencia de la solución inicial
 	%Influencia de los operadores
