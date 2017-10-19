@@ -13,6 +13,19 @@ public class Truck {
         return distance;
     }
 
+    public ArrayList<Trip> getTrips() {
+        return trips;
+    }
+
+    public Coordinate getOrigin() {
+        return origin;
+    }
+
+    public int getTripsSize(){
+        return trips.size();
+
+    }
+
     public Truck(Coordinate origin) {
         this.trips = new ArrayList<>(5);
         this.tripsLeft = 5;
@@ -37,6 +50,7 @@ public class Truck {
         }
         return false;
     }
+
 
     public double getTotalProfit() {
         double totalProfit = 0.0;

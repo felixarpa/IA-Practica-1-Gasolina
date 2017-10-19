@@ -61,6 +61,10 @@ public class State {
         return stateReturn;
     }
 
+    public int getTrucksSize() {
+        return trucks.size();
+    }
+
     public void swapRequest(int truck1, int trip1, int req1, int truck2, int trip2, int req2) {
         Request request1 = trucks.get(truck1).getTripAt(trip1).getRequest(req1);
         Request request2 = trucks.get(truck2).getTripAt(trip2).getRequest(req2);
@@ -68,6 +72,10 @@ public class State {
         trucks.get(truck1).getTripAt(trip1).setRequest(req1, request2);
         trucks.get(truck2).getTripAt(trip2).setRequest(req2, request1);
 
+    }
+
+    public Truck getTruckAt(int i){
+        return trucks.get(i);
     }
 
     public double getTotalProfit() {
