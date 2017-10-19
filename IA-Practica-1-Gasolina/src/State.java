@@ -65,6 +65,10 @@ public class State {
         return trucks.size();
     }
 
+    public Boolean isGoalState(){
+        return false;
+    }
+
     public void swapRequest(int truck1, int trip1, int req1, int truck2, int trip2, int req2) {
         Request request1 = trucks.get(truck1).getTripAt(trip1).getRequest(req1);
         Request request2 = trucks.get(truck2).getTripAt(trip2).getRequest(req2);
