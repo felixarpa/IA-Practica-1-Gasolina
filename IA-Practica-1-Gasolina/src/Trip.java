@@ -19,6 +19,17 @@ public class Trip {
         this.request2 = request2;
     }
 
+    public void setRequest(int req, Request request){
+        switch (req) {
+            case 1:
+                this.request1 = request;
+                break;
+            case 2:
+                this.request2 = request;
+                break;
+        }
+    }
+
     public Request getRequest(int req) {
         switch (req) {
             case 1:

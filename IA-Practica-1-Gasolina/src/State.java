@@ -65,6 +65,8 @@ public class State {
         Request request1 = trucks.get(truck1).getTripAt(trip1).getRequest(req1);
         Request request2 = trucks.get(truck2).getTripAt(trip2).getRequest(req2);
 
+        trucks.get(truck1).getTripAt(trip1).setRequest(req1, request2);
+        trucks.get(truck2).getTripAt(trip2).setRequest(req2, request1);
 
     }
 
