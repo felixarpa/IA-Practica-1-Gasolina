@@ -1,3 +1,5 @@
+package aima;
+
 import aima.search.framework.GoalTest;
 
 public class GasolinaGoalTest implements GoalTest{

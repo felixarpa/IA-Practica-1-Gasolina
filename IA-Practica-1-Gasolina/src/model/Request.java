@@ -1,8 +1,10 @@
+package model;
+
 public class Request {
     private Coordinate coordinate;
-    private Integer days;
+    private int days;
 
-    public Request(Coordinate coordinate, Integer days){
+    public Request(Coordinate coordinate, int days){
         this.coordinate = coordinate;
         this.days = days;
     }
@@ -12,19 +14,7 @@ public class Request {
         return coordinate;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public Integer getDays() {
-        return days;
-    }
-
-    public void setDays(Integer days) {
-        this.days = days;
-    }
-
-    public double calculateProfit() {
+    double getProfit() {
         return 10 * (
                 (days == 0) ?
                         102 :
@@ -32,4 +22,11 @@ public class Request {
                 );
     }
 
+    public Request clone() {
+        return new Request(coordinate.clone(), days);
+    }
+
+    public void print() {
+        System.out.print(days + " (" + coordinate.getCoordX() + "," + coordinate.getCoordY() + ")");
+    }
 }

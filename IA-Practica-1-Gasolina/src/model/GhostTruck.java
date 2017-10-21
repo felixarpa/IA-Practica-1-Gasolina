@@ -1,9 +1,15 @@
-import org.omg.CORBA.PUBLIC_MEMBER;
+package model;
 
 public class GhostTruck extends Truck {
 
     public GhostTruck(Coordinate origin) {
         super(origin);
+    }
+
+    public GhostTruck(Trip trip) {
+        super(new Coordinate(0, 0));
+        this.addTrip(trip);
+        this.addTrip(new GhostTrip());
     }
 
     @Override

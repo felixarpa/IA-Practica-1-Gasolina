@@ -1,3 +1,5 @@
+package aima;
+
 import aima.search.framework.HeuristicFunction;
 
 public class GasolinaHeuristicFunction implements HeuristicFunction {

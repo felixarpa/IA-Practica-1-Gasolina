@@ -1,10 +1,12 @@
 import IA.Gasolina.CentrosDistribucion;
+import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
+import aima.*;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
-import aima.search.informed.SimulatedAnnealingSearch;
+import model.Truck;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,22 +15,53 @@ import java.util.Properties;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Gasolineras gasolineras = new Gasolineras(100, 1234); // valores del experimento
-        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(10, 1, 1234); //no esto seguro de que argumento es mult
-        State state = State.initialState(centrosDistribucion, gasolineras);
+        //Gasolineras gasolineras = new Gasolineras(100, 1234); // valores del experimento
+        //CentrosDistribucion centrosDistribucion = new CentrosDistribucion(10, 1, 1234);
+        Gasolineras gasolineras = new Gasolineras(10, 1234); // valores del experimento
+        print(gasolineras);
+        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(1, 1, 1234);
+        print(centrosDistribucion);
+        State state = State.simpleInitialState(centrosDistribucion, gasolineras);
+        print(state);
 
-        Problem p = new Problem(state,
-                        new GasolinaSuccessorFunction(),
+        Problem problem = new Problem(state,
+                        new GasolinaSuccessorFunction2(),
                         new GasolinaGoalTest(),
                         new GasolinaHeuristicFunction());
 
-        Search alg = new HillClimbingSearch();
+        Search hillClimbingSearch = new HillClimbingSearch();
         //Search alg2 = new SimulatedAnnealingSearch();
-        SearchAgent agent = new SearchAgent(p, alg);
+        SearchAgent agent = new SearchAgent(problem, hillClimbingSearch);
 
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
+    }
+
+    private static void print(Gasolineras gasolineras) {
+        for (int i = 0; i < gasolineras.size(); i++) {
+            int x = gasolineras.get(i).getCoordX();
+            int y = gasolineras.get(i).getCoordY();
+            for (int j = 0; j < gasolineras.get(i).getPeticiones().size(); j++) {
+                int dias = gasolineras.get(i).getPeticiones().get(j);
+                System.out.println("Petición: " + dias + " (" + x + "," + y + ")");
+            }
+        }
+    }
+
+    private static void print(CentrosDistribucion centros) {
+        for (int i = 0; i < centros.size(); i++) {
+            int x = centros.get(i).getCoordX();
+            int y = centros.get(i).getCoordY();
+            System.out.println("Centro: (" + x + "," + y + ")");
+        }
+    }
+
+    private static void print(State state) {
+        for (int i = 0; i < state.getTrucks().size(); i++) {
+            Truck truck = state.getTrucks().get(i);
+            truck.print(i);
+        }
     }
 
     private static void printInstrumentation(Properties properties) {
