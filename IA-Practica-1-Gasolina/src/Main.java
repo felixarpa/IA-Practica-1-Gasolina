@@ -41,7 +41,10 @@ public class Main {
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
-        state.printProfit();
+
+        State goalState = (State) hillClimbingSearch.getGoalState();
+        goalState.print();
+        goalState.printProfit();
 
         long time_end = System.currentTimeMillis();
         System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");

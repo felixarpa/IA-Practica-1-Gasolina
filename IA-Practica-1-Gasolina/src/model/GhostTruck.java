@@ -23,4 +23,17 @@ public class GhostTruck extends Truck {
 
   /*  @Override
     public boolean addTrip (Trip trip){ return true; }*/
+
+    @Override
+    public GhostTruck clone() {
+        GhostTruck ghostTruck = new GhostTruck(this.getOrigin().clone());
+        ghostTruck.addTrip(this.getTripAt(0).clone());
+        return ghostTruck;
+    }
+
+    @Override
+    public void print(int id) {
+        System.out.print("(ghost) ");
+        super.print(id);
+    }
 }

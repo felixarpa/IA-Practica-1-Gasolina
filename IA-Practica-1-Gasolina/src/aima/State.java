@@ -239,4 +239,10 @@ public class State {
     public ArrayList<Truck> getTrucks() {
         return trucks;
     }
+
+    public void print() {
+        for (int i = 0; i < trucks.size(); ++i) {
+            trucks.get(i).print(i);
+        }
+    }
 }

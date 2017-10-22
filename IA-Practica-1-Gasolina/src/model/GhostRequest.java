@@ -2,7 +2,7 @@ package model;
 
 public class GhostRequest extends Request {
     public GhostRequest(Request request) {
-        super(request.getCoordinate(), 0);
+        super(request.getCoordinate().clone(), 0);
     }
 
     public GhostRequest() {
@@ -12,5 +12,10 @@ public class GhostRequest extends Request {
     @Override
     double getProfit() {
         return 0;
+    }
+
+    @Override
+    public GhostRequest clone() {
+        return new GhostRequest(this);
     }
 }

@@ -23,4 +23,5 @@ public class GhostTrip extends Trip {
     public GhostTrip clone() {
         return new GhostTrip(request1.clone(), request2.clone());
     }
+
 }
