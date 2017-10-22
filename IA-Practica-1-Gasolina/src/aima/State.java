@@ -47,14 +47,14 @@ public class State {
                     case 1:
                         trip.setRequest(2, request);
                         requestNumber = 0;
-                        boolean error = stateReturn.trucks.get(truckIterator).addTrip(trip);
+                        boolean error = !stateReturn.trucks.get(truckIterator).addTrip(trip);
                         if (error){ //violated restriction
                             ++truckIterator; //try next truck
-                            if (truckIterator == stateReturn.trucks.size()){ //No more trucks
+                            if (truckIterator >= stateReturn.trucks.size()){ //No more trucks
                                 GhostTruck ghostTruck = new GhostTruck(new Coordinate(0, 0));
                                 stateReturn.addTruck(ghostTruck);
                             }
-                            stateReturn.trucks.get(truckIterator).addTrip(trip); //adding trips to ghost tucks
+                            stateReturn.trucks.get(truckIterator).addTrip(trip); //adding trips to ghost-trucks
                         }
                         break;
                 }
@@ -88,6 +88,7 @@ public class State {
                     --i;
                     hasPair = true;
                 }
+                else j = requests.size(); // skip unnecessary iterations
             }
         }
 
@@ -97,17 +98,18 @@ public class State {
                 trips.add(new Trip(request, new GhostRequest(requests.get(i))));
             } else {
                 int minimum = 200;
-                int minimumPosition = i;
-                for (int j = i; j < requests.size(); ++j) {
+                int minimumPosition = i+1;
+                for (int j = i+1; j < requests.size(); ++j) {
                     int distance = Coordinate.distance(request.getCoordinate(), requests.get(j).getCoordinate());
                     if (distance < minimum) {
                         minimum = distance;
-                        minimumPosition = i;
+                        minimumPosition = j;
                     }
                 }
                 trips.add(new Trip(request, requests.get(minimumPosition)));
                 requests.remove(i);
-                requests.remove(minimumPosition);
+                requests.remove(minimumPosition-1);
+                //requests.remove(minimumPosition);
                 --i;
             }
         }
@@ -201,7 +203,6 @@ public class State {
             truckOne.replaceTripIfFits(trip1, tripOne);
             return false;
         }
-
         return true;
     }
 

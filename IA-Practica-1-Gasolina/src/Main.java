@@ -40,6 +40,7 @@ public class Main {
 
     private static void print(Gasolineras gasolineras) {
         for (int i = 0; i < gasolineras.size(); i++) {
+            System.out.println("Gasolinera :" + i);
             int x = gasolineras.get(i).getCoordX();
             int y = gasolineras.get(i).getCoordY();
             for (int j = 0; j < gasolineras.get(i).getPeticiones().size(); j++) {
