@@ -11,15 +11,20 @@ import model.Truck;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.lang.*;
+
 
 public class Main {
 
+
     public static void main(String[] args) throws Exception {
-        //Gasolineras gasolineras = new Gasolineras(100, 1234); // valores del experimento
-        //CentrosDistribucion centrosDistribucion = new CentrosDistribucion(10, 1, 1234);
-        Gasolineras gasolineras = new Gasolineras(10, 1234); // valores del experimento
+        long time_start;
+        time_start = System.currentTimeMillis();
+        Gasolineras gasolineras = new Gasolineras(100, 1234); // valores del experimento
+        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(10, 1, 1234);  // valores del experimento
+       // Gasolineras gasolineras = new Gasolineras(10, 1234);
         print(gasolineras);
-        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(1, 1, 1234);
+      //  CentrosDistribucion centrosDistribucion = new CentrosDistribucion(1, 1, 1234);
         print(centrosDistribucion);
         State state = State.simpleInitialState(centrosDistribucion, gasolineras);
         print(state);
@@ -36,6 +41,11 @@ public class Main {
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
+        state.printProfit();
+
+        long time_end = System.currentTimeMillis();
+        System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+
     }
 
     private static void print(Gasolineras gasolineras) {

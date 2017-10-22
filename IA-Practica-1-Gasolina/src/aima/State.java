@@ -218,6 +218,11 @@ public class State {
         return totalProfit;
     }
 
+    public void printProfit(){
+        double profit = getTotalProfit();
+        System.out.println("Total Profit = " + profit);
+    }
+
     State copy(){
         State aux = new State(this.trucks);
         return aux;
