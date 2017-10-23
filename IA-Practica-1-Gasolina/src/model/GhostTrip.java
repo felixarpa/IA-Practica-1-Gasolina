@@ -6,10 +6,6 @@ public class GhostTrip extends Trip {
         super(request1, request2);
     }
 
-    public GhostTrip() {
-        super(new GhostRequest(), new GhostRequest());
-    }
-
     @Override
     int getTripDistance(Coordinate origin) {
         return 0;

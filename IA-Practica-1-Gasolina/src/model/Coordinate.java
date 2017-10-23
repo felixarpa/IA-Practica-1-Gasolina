@@ -27,11 +27,11 @@ public class Coordinate {
         return this.coordX == that.coordX && this.coordY == that.coordY;
     }
 
-    public int getCoordX() {
+    int getCoordX() {
         return coordX;
     }
 
-    public int getCoordY() {
+    int getCoordY() {
         return coordY;
     }
 }
