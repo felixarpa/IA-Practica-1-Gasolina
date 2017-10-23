@@ -193,7 +193,7 @@ public class State {
         Truck truckOne = trucks.get(truck1);
         Trip tripOne = truckOne.getTripAt(trip1);
         Truck truckTwo = trucks.get(truck2);
-        Trip tripTwo = truckOne.getTripAt(trip2);
+        Trip tripTwo = truckTwo.getTripAt(trip2);
 
         if (!truckOne.replaceTripIfFits(trip1, tripTwo)) {
             return false;
