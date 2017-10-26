@@ -4,6 +4,7 @@ import IA.Gasolina.CentrosDistribucion;
 import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
+import javafx.util.Pair;
 import model.*;
 
 import java.util.ArrayList;
@@ -210,18 +211,48 @@ public class State {
         return trucks.get(i);
     }
 
-    double getTotalProfit() {
+    Pair <Double, Integer> getTotalProfit() {
         double totalProfit = 0.0;
+        int countNonAnsweredPetitons = 0;
         for(Truck truck : trucks) {
             totalProfit += truck.getTotalProfit();
+            if (truck instanceof GhostTruck) ++countNonAnsweredPetitons;
         }
-        return totalProfit;
+        Pair ret = new Pair(totalProfit, countNonAnsweredPetitons);
+        return ret;
+    }
+
+    Pair <Double, Integer> getTotalProfitWithNextDay() {
+        double totalProfit = 0.0;
+        int countNonAnsweredPetitons = 0;
+        for(Truck truck : trucks) {
+            totalProfit += truck.getTotalProfit();
+            if (truck instanceof GhostTruck){
+                ++countNonAnsweredPetitons;
+                double maxProfit = 0.0;
+                for(Truck truck2 : trucks) {
+                    double profit = truck.getTripAt(0).getTotalTripProfitNextDay(truck2.getOrigin());
+                    if (profit > maxProfit) maxProfit = profit;
+                }
+                totalProfit += maxProfit;
+            }
+        }
+        Pair ret = new Pair(totalProfit, countNonAnsweredPetitons);
+        return ret;
     }
 
     public void printProfit(){
-        double profit = getTotalProfit();
-        System.out.println("Total Profit = " + profit);
+        Pair print = getTotalProfit();
+        System.out.println("Total Profit = " + print.getKey());
+        System.out.println("Non answered petitions = " + print.getValue());
     }
+
+    public void printProfitNextDay(){
+        Pair print = getTotalProfitWithNextDay();
+        System.out.println("Total Profit = " + print.getKey());
+        System.out.println("Petitions answered next day = " + print.getValue());
+    }
+
 
     State copy(){
         State aux = new State(this.trucks);

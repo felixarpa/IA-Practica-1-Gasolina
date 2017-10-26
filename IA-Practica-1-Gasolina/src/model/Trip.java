@@ -41,6 +41,13 @@ public class Trip {
         return profit1 + profit2 - loss;
     }
 
+    public double getTotalTripProfitNextDay(Coordinate truckCoordinate) {
+        double profit1 = request1.cloneWithOneExtraDay().getProfit();
+        double profit2 = request2.cloneWithOneExtraDay().getProfit();
+        double loss = (getTripDistance(truckCoordinate)) * 2;
+        return profit1 + profit2 - loss;
+    }
+
     int getTripDistance(Coordinate origin) {
         return  Coordinate.distance(origin, request1.getCoordinate()) +
                 Coordinate.distance(request1.getCoordinate(), request2.getCoordinate()) +

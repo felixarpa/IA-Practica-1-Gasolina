@@ -6,6 +6,7 @@ import aima.search.framework.Problem;
 import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.HillClimbingSearch;
+import aima.search.informed.SimulatedAnnealingSearch;
 import model.Truck;
 
 import java.util.Iterator;
@@ -20,6 +21,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         long time_start;
         time_start = System.currentTimeMillis();
+
         Gasolineras gasolineras = new Gasolineras(100, 1234); // valores del experimento
         CentrosDistribucion centrosDistribucion = new CentrosDistribucion(10, 1, 1234);  // valores del experimento
        // Gasolineras gasolineras = new Gasolineras(10, 1234);
@@ -35,7 +37,8 @@ public class Main {
                         new GasolinaHeuristicFunction());
 
         Search hillClimbingSearch = new HillClimbingSearch();
-        //Search alg2 = new SimulatedAnnealingSearch();
+        //Search SimulatedAnnealingSearch = new SimulatedAnnealingSearch();
+        //SearchAgent agent = new SearchAgent(problem, SimulatedAnnealingSearch);
         SearchAgent agent = new SearchAgent(problem, hillClimbingSearch);
 
         System.out.println();
