@@ -10,12 +10,12 @@ public class Truck {
     private ArrayList<Trip> trips;
     private Coordinate origin;
 
-    public Truck(Coordinate origin) {
+    Truck(Coordinate origin) {
         this.trips = new ArrayList<>();
         this.origin = origin;
     }
 
-    Truck(ArrayList<Trip> trips, Coordinate origin) {
+    private Truck(ArrayList<Trip> trips, Coordinate origin) {
         this.trips = trips;
         this.origin = origin;
     }
@@ -30,10 +30,6 @@ public class Truck {
 
     public Trip getTripAt(int index) {
         return trips.get(index);
-    }
-
-    public void removeTripAt(int index) {
-        trips.remove(index);
     }
 
     public boolean addTrip(Trip trip) {
@@ -84,10 +80,6 @@ public class Truck {
 
     public boolean isFull() {
         return trips.size() >= 5;
-    }
-
-    public ArrayList<Trip> getTrips() {
-        return trips;
     }
 
     public Truck clone() {

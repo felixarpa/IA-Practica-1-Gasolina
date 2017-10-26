@@ -1,6 +1,7 @@
 package model;
 
 public class GhostRequest extends Request {
+
     public GhostRequest(Request request) {
         super(request.getCoordinate().clone(), 0);
     }
