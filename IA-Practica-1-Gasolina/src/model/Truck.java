@@ -13,11 +13,13 @@ public class Truck {
 
     Truck(Coordinate origin) {
         this.trips = new ArrayList<>();
+        this.extraTrips = new ArrayList<>();
         this.origin = origin;
     }
 
     private Truck(ArrayList<Trip> trips, Coordinate origin) {
         this.trips = trips;
+        this.extraTrips = new ArrayList<>();
         this.origin = origin;
     }
 
