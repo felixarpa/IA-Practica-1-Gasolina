@@ -4,7 +4,6 @@ import IA.Gasolina.CentrosDistribucion;
 import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolinera;
 import IA.Gasolina.Gasolineras;
-import javafx.util.Pair;
 import model.*;
 
 import java.util.ArrayList;
@@ -119,7 +118,7 @@ public class State {
         return trucks.get(i);
     }
 
-    Pair <Double, Integer> getTotalProfit() {
+    Pair<Double, Integer> getTotalProfit() {
         double totalProfit = 0.0;
         int countNonAnsweredPetitons = 0;
         for(Truck truck : trucks) {
@@ -138,9 +137,14 @@ public class State {
             if (truck instanceof GhostTruck){
                 ++countNonAnsweredPetitons;
                 double maxProfit = 0.0;
-                for(Truck truck2 : trucks) {
-                    double profit = truck.getTripAt(0).getTotalTripProfitNextDay(truck2.getOrigin());
-                    if (profit > maxProfit) maxProfit = profit;
+                Trip trip2 = truck.getTripAt(0);
+                for(int i = 0; i<trucks.size(); ++i) {
+                    Truck truck2 = trucks.get(i);
+                    double profit = trip2.getTotalTripProfitNextDay(truck2.getOrigin());
+                    if (profit > maxProfit && truck2.addExtraTrip(trip2)) {
+                        maxProfit = profit;
+                    }
+
                 }
                 totalProfit += maxProfit;
             }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Truck {
     private final int MAX_DISTANCE = 640;
     private ArrayList<Trip> trips;
+    private ArrayList<Trip> extraTrips;
     private Coordinate origin;
 
     Truck(Coordinate origin) {
@@ -28,12 +29,20 @@ public class Truck {
         return trips.size();
     }
 
+    public int getExtraTripsSize(){
+        return extraTrips.size();
+    }
+
     public Trip getTripAt(int index) {
         return trips.get(index);
     }
 
     public boolean addTrip(Trip trip) {
         return newTravelDistanceWith(trip) <= MAX_DISTANCE && trips.size() < 5 && trips.add(trip);
+    }
+
+    public boolean addExtraTrip(Trip trip) {
+        return newExtraTravelDistanceWith(trip) <= MAX_DISTANCE && extraTrips.size() < 5 && extraTrips.add(trip);
     }
 
     public Boolean replaceTripIfFits(int index, Trip trip) {
@@ -58,6 +67,10 @@ public class Truck {
     }
 
 
+    private int newExtraTravelDistanceWith(Trip trip) {
+        return calculateTripDistance(trip) + getTotalExtraDistance();
+    }
+
     private int newTravelDistanceWith(Trip trip) {
         return calculateTripDistance(trip) + getTotalDistance();
     }
@@ -65,6 +78,14 @@ public class Truck {
     private int getTotalDistance() {
         int total = 0;
         for(Trip trip : trips) {
+            total += trip.getTripDistance(origin);
+        }
+        return total;
+    }
+
+    private int getTotalExtraDistance() {
+        int total = 0;
+        for(Trip trip : extraTrips) {
             total += trip.getTripDistance(origin);
         }
         return total;
