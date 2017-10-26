@@ -37,6 +37,7 @@ public class Main {
 
         Search hillClimbingSearch = new HillClimbingSearch();
         Search simulatedAnnealingSearch = new SimulatedAnnealingSearch();
+
         SearchAgent agent = new SearchAgent(problem, hillClimbingSearch);
         State goalState = (State) hillClimbingSearch.getGoalState();
 

@@ -20,7 +20,7 @@ public class Truck {
         this.origin = origin;
     }
 
-    Coordinate getOrigin() {
+    public Coordinate getOrigin() {
         return origin;
     }
 

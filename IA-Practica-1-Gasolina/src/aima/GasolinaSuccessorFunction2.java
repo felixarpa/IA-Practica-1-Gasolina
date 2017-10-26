@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GasolinaSuccessorFunction implements SuccessorFunction {
+public class GasolinaSuccessorFunction2 implements SuccessorFunction {
 
     public List getSuccessors(Object o){
         ArrayList<Successor> successors = new ArrayList<>();
@@ -18,12 +18,12 @@ public class GasolinaSuccessorFunction implements SuccessorFunction {
         for (int i = 0; i < state.getTrucksSize(); i++) {
             Truck truck = state.getTruckAt(i);
             for (int j = 0; j < truck.getTripsSize(); j++) {
-                for (int k = i + 1; k < state.getTrucksSize(); k++) {
+                for (int k = i; k < state.getTrucksSize(); k++) {
                     Truck truck2 = state.getTruckAt(k);
                     for (int l = 0; l < truck2.getTripsSize(); l++) {
                         State newState = state.clone();
-                        Boolean canSwap = newState.swapTrip(i, j, k, l);
-                        if (canSwap && newState.getTotalProfit().getKey() > state.getTotalProfit().getKey()) {
+                        newState.swapTrip(i, j, k, l);
+                        if (newState.getTotalProfit().getKey() > state.getTotalProfit().getKey()) {
                             successors.add(new Successor(
                                     "Swap trip " + j + " from truck " + i + " with trip " + l + " from truck " + k,
                                     newState

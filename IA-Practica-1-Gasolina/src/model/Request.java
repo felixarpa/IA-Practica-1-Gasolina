@@ -26,7 +26,12 @@ public class Request {
         return new Request(coordinate.clone(), days);
     }
 
-    void print() {
+    public  Request cloneWithOneExtraDay() {
+        return new Request(coordinate.clone(), days + 1);
+    }
+
+    public void print() {
+
         System.out.print(days + " (" + coordinate.getCoordX() + "," + coordinate.getCoordY() + ")");
     }
 }
