@@ -71,10 +71,11 @@ public class State {
         for (Truck truck: trucks) {
             for (int i = 0; i < trips.size() && !truck.isFull(); i++) {
                 Trip trip = trips.get(i);
-                if(truck.addTrip(trip)) {
+                if((trip.getTotalTripProfit(truck.getOrigin()) >= 0) && truck.addTrip(trip)) {
                     trips.remove(i);
                     --i;
                 }
+                else truck.addTrip(new GhostTrip(new GhostRequest(), new GhostRequest()));
             }
 
             while (!truck.isFull()) {
@@ -138,9 +139,10 @@ public class State {
         for(Truck truck : trucks) {
             totalProfit += truck.getTotalProfit();
             if (truck instanceof GhostTruck){
-                ++countNonAnsweredPetitons;
                 double maxProfit = 0.0;
                 Trip trip2 = truck.getTripAt(0);
+                if (!(trip2 instanceof GhostTrip)) ++countNonAnsweredPetitons;
+
                 for(int i = 0; i<trucks.size(); ++i) {
                     Truck truck2 = trucks.get(i);
                     double profit = trip2.getTotalTripProfitNextDay(truck2.getOrigin());
