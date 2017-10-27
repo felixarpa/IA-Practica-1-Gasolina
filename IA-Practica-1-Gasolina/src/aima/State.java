@@ -133,6 +133,8 @@ public class State {
     Pair<Double, Integer> getTotalProfitWithNextDay() {
         double totalProfit = 0.0;
         int countNonAnsweredPetitons = 0;
+
+        double profitForNextDay = 0.0;
         for(Truck truck : trucks) {
             totalProfit += truck.getTotalProfit();
             if (truck instanceof GhostTruck){
@@ -142,7 +144,9 @@ public class State {
                 for(int i = 0; i<trucks.size(); ++i) {
                     Truck truck2 = trucks.get(i);
                     double profit = trip2.getTotalTripProfitNextDay(truck2.getOrigin());
-                    if (!(truck2 instanceof GhostTruck) && profit > maxProfit && truck2.addExtraTrip(trip2)) {
+                    //System.out.println(profit);
+                    if (profit > maxProfit && truck2.addExtraTrip(trip2)) {
+                        //System.out.println("Extra trip added to truck" + Double.toString(profit));
                         maxProfit = profit;
                     }
 
@@ -150,7 +154,7 @@ public class State {
                 totalProfit += maxProfit;
             }
         }
-        return new Pair<>(totalProfit, countNonAnsweredPetitons);
+        return new Pair<>(totalProfit, countNonAnsweredPetitons*2);
     }
 
     public void printProfit(){
@@ -160,9 +164,12 @@ public class State {
     }
 
     public void printProfitNextDay(){
-        Pair print = getTotalProfitWithNextDay();
-        System.out.println("Total Profit = " + print.getKey());
-        System.out.println("Petitions answered next day = " + print.getValue());
+        Pair today = getTotalProfit();
+        Pair twoDays = getTotalProfitWithNextDay();
+        Double profitTomorrow = (Double) twoDays.getKey() - (Double) today.getKey();
+        System.out.println("Total Profit for today = " + today.getKey());
+        System.out.println("Profit for tomorrow = " + profitTomorrow);
+        System.out.println("Petitions answered next day = " + twoDays.getValue());
     }
     public State clone() {
         ArrayList<Truck> clonedTrucks = new ArrayList<>();

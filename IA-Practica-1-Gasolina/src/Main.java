@@ -33,20 +33,23 @@ public class Main {
         Problem problem = new Problem(state,
                         new GasolinaSuccessorFunction(),
                         new GasolinaGoalTest(),
-                        new GasolinaHeuristicFunction());
+                        new GasolinaHeuristicFunction2());
 
         Search hillClimbingSearch = new HillClimbingSearch();
         Search simulatedAnnealingSearch = new SimulatedAnnealingSearch();
 
         SearchAgent agent = new SearchAgent(problem, hillClimbingSearch);
+        //SearchAgent agent = new SearchAgent(problem, simulatedAnnealingSearch);
+
         State goalState = (State) hillClimbingSearch.getGoalState();
+        //State goalState = (State) simulatedAnnealingSearch.getGoalState();
 
         System.out.println();
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
         goalState.print();
-        goalState.printProfit();
-
+        //goalState.printProfit();
+        goalState.printProfitNextDay();
         long endTime = System.currentTimeMillis();
         System.out.println("The task has taken "+ ( endTime - initTime ) +" milliseconds");
     }
