@@ -3,6 +3,7 @@
 \usepackage[spanish]{babel}
 \usepackage{float}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \graphicspath{ {images/} }
 
 \title{Búsqueda local}
@@ -23,6 +24,8 @@
 \begin{document}
  
 \maketitle
+
+\newpage
 
 \tableofcontents
 
@@ -194,6 +197,51 @@ Para encontrar una solución óptima con Simulated Annealing, a diferencia de Hill
 
 \subsection{Experimento 4}
 
+Después de haber realizado varias pruebas para ambos algoritmos hemos podido comprobar que Simulated Annealing sigue dando buenos resultados pese a aumentar el número de centros. Sin embargo el tiempo de ejecución para Simulated Annealing aumenta exponencialmente al añadir centros, por ello hemos realizado las pruebas con una cantidad de centros menor a la recomendada por el enunciado.
+
+En las siguiente tabla y gráfica representamos el tiempo de ejecución de Hill Climbling según el número de centros con los que operaban:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lllll@{}}
+\textbf{Centros de distribución} & \textbf{Tiempo de ejecución (ms)} \\ \hline
+\multicolumn{1}{|c|}{10} & \multicolumn{1}{c|}{2193} \\ \hline
+\multicolumn{1}{|c|}{20} & \multicolumn{1}{c|}{4725} \\ \hline
+\multicolumn{1}{|c|}{30} & \multicolumn{1}{c|}{13344} \\ \hline
+\multicolumn{1}{|c|}{40} & \multicolumn{1}{c|}{31497} \\ \hline
+\multicolumn{1}{|c|}{50} & \multicolumn{1}{c|}{58276} \\ \hline
+\multicolumn{1}{|c|}{60} & \multicolumn{1}{c|}{106000} \\ \hline
+\end{tabular}
+\caption{Experimento 4.1}
+\label{exp-4-1}
+\end{table}
+
+\includegraphics[scale=0.55]{plot4-1}
+
+\hfill
+
+\hfill
+
+En las siguiente tabla y gráfica representamos el tiempo de ejecución de Simulated Annealing según el número de centros con los que operaban:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lllll@{}}
+\textbf{Centros de distribución} & \textbf{Tiempo de ejecución (ms)} \\ \hline
+\multicolumn{1}{|c|}{1} & \multicolumn{1}{c|}{830} \\ \hline
+\multicolumn{1}{|c|}{2} & \multicolumn{1}{c|}{1175} \\ \hline
+\multicolumn{1}{|c|}{3} & \multicolumn{1}{c|}{2278} \\ \hline
+\multicolumn{1}{|c|}{4} & \multicolumn{1}{c|}{3249} \\ \hline
+\multicolumn{1}{|c|}{5} & \multicolumn{1}{c|}{5257} \\ \hline
+\multicolumn{1}{|c|}{6} & \multicolumn{1}{c|}{7937} \\ \hline
+\multicolumn{1}{|c|}{7} & \multicolumn{1}{c|}{11652} \\ \hline
+\end{tabular}
+\caption{Experimento 4.2}
+\label{exp-4-2}
+\end{table}
+
+\includegraphics[scale=0.55]{plot4-2}
+
 \subsection{Experimento 5}
 
 Para comprobar cuál es el efecto que tiene dividir en dos la cantidad de centros de distribución pero doblando la cantidad de camiones por centro (en otras palabras 2) hemos primero probado nuestra situación inicial. 
@@ -250,6 +298,12 @@ Como en los apartados anteriores hemos usado los parámetros del experimento espe
 Cambiando el número máximo de kilómetros de 640 a 720 y ejecutando el mismo algoritmo con los mismos parámetros recibimos un beneficio de 95668.0 que es sólo ligeramente más que con 640. Eso se nos hacía evidente que la diferencia no iba a ser mucho ya que con 640 ya daba para que todos los camiones usaran sus 5 viajes para solventar 10 peticiones. El aumentar la cantidad de kilómetros solo significa que algún camión deber haber tenido como opción una petición que antes no le era posible acceder y que proporciona más beneficio que la anterior.
 
 Esta hora extra solo proporciona un cambio realmente notable si las gasolineras estuviesen a mucha distancia de los centros de distribución y hubiesen camiones que se quedaran sin usar sus 5 viajes por falta de kilometraje.
+
+\section{Código}
+
+Se puede conseguir el código en el repositorio público:
+
+\url{https://github.com/felixarpa/IA-Practica-1-Gasolina}
 
 
 

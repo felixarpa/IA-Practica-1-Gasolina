@@ -4,6 +4,8 @@ Raúl García, David Williams, Fèlix Arribas
 
 ### ¿Cómo ejecutar el progama?
 
+Escribe en tu terminal:
+
 ```
 ➜ java -jar IA-Practica-1-Gasolina.jar
 ```
