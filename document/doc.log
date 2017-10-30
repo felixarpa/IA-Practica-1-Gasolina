@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.5)  30 OCT 2017 21:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.5)  30 OCT 2017 21:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -90,10 +90,7 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
-(./doc.aux
-LaTeX Info: Redefining \. on input line 6.
-LaTeX Info: Redefining \% on input line 6.
-)
+(./doc.aux)
 \openout1 = `doc.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
@@ -204,39 +201,49 @@ Overfull \hbox (5.99707pt too wide) in paragraph at lines 109--110
 Bool 
  []
 
-[5] [6] [7] <plot6.png, id=38, 559.08875pt x 410.53375pt>
+[5] [6]
+
+LaTeX Warning: Reference `ssec:exp1' on page 7 undefined on input line 189.
+
+[7] <plot6.png, id=38, 559.08875pt x 410.53375pt>
 File: plot6.png Graphic file (type png)
  <use plot6.png>
 Package pdftex.def Info: plot6.png used on input line 240.
 (pdftex.def)             Requested size: 307.49976pt x 225.79425pt.
-
-[8] [9 <./plot6.png>] (./doc.aux
+ [8] [9 <./plot6.png>] (./doc.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
-) ) 
+)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  2452 strings out of 494437
  34239 string characters out of 6166645
- 101334 words of memory out of 5000000
+ 101316 words of memory out of 5000000
  5778 multiletter control sequences out of 15000+600000
  8578 words of font info for 31 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  39i,8n,30p,599b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
-10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmex10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi7.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2017basic/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017basic/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017basic/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017basic/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on doc.pdf (9 pages, 187578 bytes).
+</usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
+0.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi7.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2017basic/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017basic/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017basic/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017basic/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on doc.pdf (9 pages, 189231 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  62 compressed objects within 1 object stream

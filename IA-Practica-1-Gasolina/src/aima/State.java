@@ -119,35 +119,36 @@ public class State {
         return trucks.get(i);
     }
 
-    Pair<Double, Integer> getTotalProfit() {
-        double totalProfit = 0.0;
-        int countNonAnsweredPetitons = 0;
+    Integer getNotAnsweredPetitions() {
+        Integer countNonAnsweredPetitons = 0;
         for(Truck truck : trucks) {
-            totalProfit += truck.getTotalProfit();
-            if (truck instanceof GhostTruck) ++countNonAnsweredPetitons;
+            if (truck instanceof GhostTruck) {
+                ++countNonAnsweredPetitons;
+            }
         }
-        Pair ret = new Pair(totalProfit, countNonAnsweredPetitons);
-        return ret;
+        return countNonAnsweredPetitons;
     }
 
-    Pair<Double, Integer> getTotalProfitWithNextDay() {
+    Double getTotalProfit() {
         double totalProfit = 0.0;
-        int countNonAnsweredPetitons = 0;
+        for(Truck truck : trucks) {
+            totalProfit += truck.getTotalProfit();
+        }
+        return totalProfit;
+    }
 
-        double profitForNextDay = 0.0;
+    Double getTotalProfitWithNextDay() {
+        double totalProfit = 0.0;
+
         for(Truck truck : trucks) {
             totalProfit += truck.getTotalProfit();
             if (truck instanceof GhostTruck){
                 double maxProfit = 0.0;
                 Trip trip2 = truck.getTripAt(0);
-                if (!(trip2 instanceof GhostTrip)) ++countNonAnsweredPetitons;
 
-                for(int i = 0; i<trucks.size(); ++i) {
-                    Truck truck2 = trucks.get(i);
+                for (Truck truck2 : trucks) {
                     double profit = trip2.getTotalTripProfitNextDay(truck2.getOrigin());
-                    //System.out.println(profit);
                     if (profit > maxProfit && truck2.addExtraTrip(trip2)) {
-                        //System.out.println("Extra trip added to truck" + Double.toString(profit));
                         maxProfit = profit;
                     }
 
@@ -155,22 +156,21 @@ public class State {
                 totalProfit += maxProfit;
             }
         }
-        return new Pair<>(totalProfit, countNonAnsweredPetitons*2);
+        return totalProfit;
     }
 
     public void printProfit(){
-        Pair print = getTotalProfit();
-        System.out.println("Total Profit = " + print.getKey());
-        System.out.println("Non answered petitions = " + print.getValue());
+        System.out.println("Total Profit = " + getTotalProfit());
+        System.out.println("Non answered petitions = " + getNotAnsweredPetitions());
     }
 
     public void printProfitNextDay(){
-        Pair today = getTotalProfit();
-        Pair twoDays = getTotalProfitWithNextDay();
-        Double profitTomorrow = (Double) twoDays.getKey() - (Double) today.getKey();
-        System.out.println("Total Profit for today = " + today.getKey());
+        Double todayProfit = getTotalProfit();
+        Double todayAndTomorrowProfit = getTotalProfitWithNextDay();
+        Double profitTomorrow = todayAndTomorrowProfit - todayProfit;
+        System.out.println("Total Profit for today = " + todayProfit);
         System.out.println("Profit for tomorrow = " + profitTomorrow);
-        System.out.println("Petitions answered next day = " + twoDays.getValue());
+        System.out.println("Petitions answered next day = " + todayAndTomorrowProfit);
     }
     public State clone() {
         ArrayList<Truck> clonedTrucks = new ArrayList<>();

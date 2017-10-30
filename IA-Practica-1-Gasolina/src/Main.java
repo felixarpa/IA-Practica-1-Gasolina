@@ -2,14 +2,11 @@ import IA.Gasolina.CentrosDistribucion;
 import IA.Gasolina.Distribucion;
 import IA.Gasolina.Gasolineras;
 import aima.*;
-import aima.search.framework.Problem;
-import aima.search.framework.Search;
-import aima.search.framework.SearchAgent;
+import aima.search.framework.*;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
 import model.Truck;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
@@ -21,23 +18,29 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-
-        // CUSTOM PARAMETERS
         Scanner capt = new Scanner(System.in);
-        int heuristic = 0, search  = 0, ncen, ngas, seed, ntruck;
+
+        int heuristic = 0;
+        int search  = 0;
+
         System.out.println("Specify number of Centers:");
-        ncen = capt.nextInt();
+        int ncen = capt.nextInt();
+
         System.out.println("Specify number of trucks per Center:");
-        ntruck = capt.nextInt();
+        int ntruck = capt.nextInt();
+
         System.out.println("Specify number of Petrol Stations:");
-        ngas = capt.nextInt();
+        int ngas = capt.nextInt();
+
         System.out.println("Specify the Seed:");
-        seed = capt.nextInt();
-        while(heuristic != 1 && heuristic != 2){
-            System.out.println("Specify the Heuristic Function: 1 or 2");
+        int seed = capt.nextInt();
+
+        while (heuristic != 1 && heuristic != 2) {
+            System.out.println("Specify the Heuristic Function: today's profit (1) or today's and tomorrow's profit (2)");
             heuristic = capt.nextInt();
         }
-        while(search != 1 && search != 2){
+
+        while (search != 1 && search != 2) {
             System.out.println("Specify the Search Method: Hill Climbing (1) or Simulated Annealing (2)");
             search = capt.nextInt();
         }
@@ -50,47 +53,44 @@ public class Main {
 
         print(gasolineras);
         print(centrosDistribucion);
-        //print(state);  // why printing the initial state?
 
         Problem problem;
         Search typeOfSearch;
-        if(search == 1) typeOfSearch = new HillClimbingSearch();
-        else typeOfSearch = new SimulatedAnnealingSearch();
+        SuccessorFunction successorFunction;
+        HeuristicFunction heuristicFunction;
 
-        if(heuristic == 1) {
-            problem = new Problem(state,
-                    new GasolinaSuccessorFunction(),
-                    new GasolinaGoalTest(),
-                    new GasolinaHeuristicFunction());
+        if (search == 1) {
+            typeOfSearch = new HillClimbingSearch();
+            successorFunction =  new GasolinaSuccessorFunctionHC();
+        } else {
+            typeOfSearch = new SimulatedAnnealingSearch();
+            successorFunction =  new GasolinaSuccessorFunctionSA();
         }
-        else{
-            problem = new Problem(state,
-                    new GasolinaSuccessorFunction(),
-                    new GasolinaGoalTest(),
-                    new GasolinaHeuristicFunction2());
+
+        if (heuristic == 1) {
+            heuristicFunction = new GasolinaHeuristicFunction1();
+        } else {
+            heuristicFunction = new GasolinaHeuristicFunction2();
         }
+
+        problem = new Problem(state, successorFunction, new GasolinaGoalTest(), heuristicFunction);
 
         SearchAgent agent = new SearchAgent(problem, typeOfSearch);
-        // Search hillClimbingSearch = new HillClimbingSearch();
-        // Search simulatedAnnealingSearch = new SimulatedAnnealingSearch();
-        // SearchAgent agent = new SearchAgent(problem, hillClimbingSearch);
-        // SearchAgent agent = new SearchAgent(problem, simulatedAnnealingSearch);
+
         State goalState = (State) typeOfSearch.getGoalState();
-        // State goalState = (State) hillClimbingSearch.getGoalState();
-        // State goalState = (State) simulatedAnnealingSearch.getGoalState();
 
         System.out.println();
-        //printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
         goalState.print();
-        switch(heuristic) {
+
+        switch (heuristic) {
             case 1:
                 goalState.printProfit();
                 break;
             case 2:
                 goalState.printProfitNextDay();
         }
-        //goalState.printProfitNextDay();
+
         long endTime = System.currentTimeMillis();
         System.out.println("The task has taken "+ ( endTime - initTime ) +" milliseconds");
     }
