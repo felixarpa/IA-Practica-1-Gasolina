@@ -24,9 +24,11 @@ public class Main {
 
         // CUSTOM PARAMETERS
         Scanner capt = new Scanner(System.in);
-        int heuristic = 0, search  = 0, ncen, ngas, seed;
+        int heuristic = 0, search  = 0, ncen, ngas, seed, ntruck;
         System.out.println("Specify number of Centers:");
         ncen = capt.nextInt();
+        System.out.println("Specify number of trucks per Center:");
+        ntruck = capt.nextInt();
         System.out.println("Specify number of Petrol Stations:");
         ngas = capt.nextInt();
         System.out.println("Specify the Seed:");
@@ -43,7 +45,7 @@ public class Main {
         long initTime = System.currentTimeMillis();
 
         Gasolineras gasolineras = new Gasolineras(ngas, seed);
-        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(ncen, 1, seed);
+        CentrosDistribucion centrosDistribucion = new CentrosDistribucion(ncen, ntruck, seed);
         State state = State.simpleInitialState(centrosDistribucion, gasolineras);
 
         print(gasolineras);
@@ -78,7 +80,7 @@ public class Main {
         // State goalState = (State) simulatedAnnealingSearch.getGoalState();
 
         System.out.println();
-        printActions(agent.getActions());
+        //printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
         goalState.print();
         switch(heuristic) {
