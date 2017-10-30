@@ -75,7 +75,6 @@ public class State {
                     trips.remove(i);
                     --i;
                 }
-                else truck.addTrip(new GhostTrip(new GhostRequest(), new GhostRequest()));
             }
 
             while (!truck.isFull()) {

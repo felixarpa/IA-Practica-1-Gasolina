@@ -81,8 +81,14 @@ public class Main {
         printActions(agent.getActions());
         printInstrumentation(agent.getInstrumentation());
         goalState.print();
-        //goalState.printProfit();
-        goalState.printProfitNextDay();
+        switch(heuristic) {
+            case 1:
+                goalState.printProfit();
+                break;
+            case 2:
+                goalState.printProfitNextDay();
+        }
+        //goalState.printProfitNextDay();
         long endTime = System.currentTimeMillis();
         System.out.println("The task has taken "+ ( endTime - initTime ) +" milliseconds");
     }
