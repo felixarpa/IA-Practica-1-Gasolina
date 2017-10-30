@@ -2,7 +2,7 @@
 
 Raúl García, David Williams, Fèlix Arribas
 
-### ¿Cómo ejecutar el progama?
+### Ejecuta el progama
 
 Escribe en tu terminal:
 
@@ -10,7 +10,7 @@ Escribe en tu terminal:
 ➜ java -jar IA-Practica-1-Gasolina.jar
 ```
 
-### Ejemplo de ejecución:
+### Ejemplo de ejecución
 
 ```
 ➜ java -jar IA-Practica-1-Gasolina.jar
