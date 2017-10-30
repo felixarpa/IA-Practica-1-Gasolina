@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IA-Practica-1-Gasolina:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IA_Practica_1_Gasolina_jar</output-path>
+    <root id="archive" name="IA-Practica-1-Gasolina.jar">
+      <element id="module-output" name="IA-Practica-1-Gasolina" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Gasolina.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../AIMA.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

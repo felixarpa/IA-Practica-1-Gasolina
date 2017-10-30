@@ -1,16 +1,12 @@
-# Práctica de Inteligencia Artificial 1: Gasolineras
+Práctica 1: Gasolina
+    Raúl García, David Williams, Fèlix Arribas
 
-Raúl García, David Williams, Fèlix Arribas
+¿Cómo ejecutar el progama?
 
-### ¿Cómo ejecutar el progama?
-
-```
 ➜ java -jar IA-Practica-1-Gasolina.jar
-```
 
-### Ejemplo de ejecución:
+Ejemplo de ejecución:
 
-```
 ➜ java -jar IA-Practica-1-Gasolina.jar
 Specify number of Centers:
 10
@@ -29,4 +25,3 @@ Total Profit = 95640.0
 Non answered petitions = 16
 The task has taken 1101 milliseconds
 ➜ 
-```

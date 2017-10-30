@@ -51,8 +51,8 @@ public class Main {
         CentrosDistribucion centrosDistribucion = new CentrosDistribucion(ncen, ntruck, seed);
         State state = State.simpleInitialState(centrosDistribucion, gasolineras);
 
-        print(gasolineras);
-        print(centrosDistribucion);
+        //print(gasolineras);
+        //print(centrosDistribucion);
 
         Problem problem;
         Search typeOfSearch;
@@ -80,8 +80,8 @@ public class Main {
         State goalState = (State) typeOfSearch.getGoalState();
 
         System.out.println();
-        printInstrumentation(agent.getInstrumentation());
-        goalState.print();
+        //printInstrumentation(agent.getInstrumentation());
+        //goalState.print();
 
         switch (heuristic) {
             case 1:
