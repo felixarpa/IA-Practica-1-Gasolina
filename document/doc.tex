@@ -1,6 +1,9 @@
 \documentclass{article}
 \usepackage[latin1]{inputenc}
 \usepackage[spanish]{babel}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 
 \title{Búsqueda local}
 \author{
@@ -15,11 +18,15 @@
 }
 \date{}
 
+\def\code#1{\texttt{#1}}
+
 \begin{document}
  
 \maketitle
 
 \tableofcontents
+
+\newpage
 
 \section{Descripción del problema}
 
@@ -67,25 +74,174 @@ Por lo tanto, en este problema tenemos diferentes \textbf{estados}, de los cuale
 %Elementos del estado
 
 \subsection{Estado} %Estado del problema y representación
+
+Después estudiar las variables y las restricciones de la práctica, hemos llegado a la conclusión de que el conjunto de estados posibles se puede representar de la siguiente forma:
+
+Una lista de camiones, cada uno con sus peticiones para ese día guardadas correctamente, es decir, cumpliendo todas las restricciones definidas anteriormente.
+
 \subsubsection{Elementos del estado}
+
+Como se puede ver, cada estado tendrá una lista de \textbf{camiones} (\emph{Truck}). Este objeto representa los diferentes camiones de los \textbf{centros de distribución} que se generan aleatoriamente al principio del problema.
+
+Cada camión esta representado en la clase \code{Truck.java}. Ésta tiene sus coordenadas de \textbf{origen}, es decir, del su centro de distribución y dos listas para guardar los \textbf{viajes} que harán ese día (\code{trips}) y el día siguiente (\code{extraTrips}). Cada vez que se quieren modificar la cantidad de viajes que se quieren hacer ese día en ese camión se controla que no sean más de cinco ni que superen los kilómetros máximos (como definen las \textbf{restricciones}).
+
+Los viajes que hace cada camión (representados en la clase \code{Trip.java}), no son las \textbf{peticiones} hechas por las \textbf{gasolineras}, esto puede engañar. Al ver que cada camión podía llevar dos cisternas y con cada cisterna cumplir dos peticiones vimos claro que cada camión, en un viaje, puede completar \textbf{dos peticiones} (o \emph{Request}). Esto son los viajes, combinaciones de dos peticiones de las gasolineras. Estas peticiones pueden estar en el mismo lugar o no, pueden ser de gasolineras difentes.
+
+También tenemos que representar las peticiones, para eso tenemos la clase \code{Request.java}. Este tipo de objeto simplemente nos ofrece la coordenada donde se ha de cumplir esta petición y los días que lleva creada. El beneficio que puede ofrecer es una variable calculada, así nos ahorramos algo memoria.
+
+Para calcular el beneficio total del estado empezamos en la petición (\code{Request}): Una función nos calcula las ganancias según el día que la petición lleva vigente. Una vez conseguimos este valor, sabiendo el origen de coordenadas inicial de donde sale el camión y las dos peticiones del viaje (\code{Trip}) podemos saber el beneficio total de cada viaje contando también las pérdidas por los kilómetros recorridos. Si sumamos todos los beneficios de todos los viajes de todos los camiones (\code{Truck}), conseguimos el beneficio total del estado (\code{State.class}).
+
+Por último falta guardar en algún sitio todas esas peticiones que no se hacen pero que queremos tener en cuenta para otros posibles estados sucesores. Para almacenar estas peticiones hemos creado camiones fantasma (\code{GhostTruck.java}) con viajes fantasma (\code{GhostTrip.java}). Funcionan exactamente igual que sus hermanos no fantasma, pero en cuanto queremos saber su beneficio nos devuelven el peor posible, 0. 
+
 \subsubsection{Espacio de búsqueda}
+
+Si usamos esta representación del estado vemos que nuestro espacio de búsqueda es inmenso. Todas las combinaciones diferentes de todas las diferentes peticiones con todos los camiones disponibles. Esto es un problema, porque teniendo solamente 10 camiones y 100 peticiones ya tenemos 100.000 combinaciones diferentes.
+
+Por eso lo vamos a simplificar un poco con los operadores y el estado inicial nos ayudará a estar cerca de la solución des de un inicio.
 
 \subsection{Operadores} %Representación y análisis de los operadores
 %Operadores uno por uno (+elección)
+
+Para la representación del estado explicada anteriormente y teniendo en cuenta el espacio de búsquedas tan grande, hemos implementado un único operador, que nos permite intercambiar viajes (par de peticiones) entre dos camiones diferentes:
+
+\hfill
+
+\code{swapTrip(truck1: Int, trip1: Int, truck2: Int, trip2: Int): Bool}
+
+\hfill
+
+Con el que intercambiamos un viaje numero \code{trip1} de un camión en la posición \code{truck1}, con otro viaje en la posición \code{trip2}, de un camión distinto con índice \code{truck2} en la lista de camiones del estado.
+
+Este operador no nos permite abarcar todo el conjunto de estados solución porque no se pueden intercambiar peticiones entre viajes. Hay que crear la mejor combinación de peticiones posibles en el estado inicial.
+
 \subsubsection{Factor de ramificación}
 
+Al hacer un cambio ya generamos un estado nuevo. Con $n$ camiones y $m$ peticiones, si agrupamos las peticiones de dos en dos por viajes y suponiendo que no se viola ninguna restricción podemos crear aproximadamente $n \times (m/2)^2$ sucesores diferentes en el peor caso.
+
 \subsection{Función heurística} %Análisis de ls función heurística
+
+La función heurística es la suma del beneficio total de cada camión con los viajes de ese estado. Recordemos:
+
+\[ \% precio = (100 - 2^{dias}) \%\]
+\[Para\ dias = 0\ partimos\ del\ 102\%\]
+
+\[d(A,B)=\mid A_{x}-B_{x}\mid +\mid A_{y}-B_{y}\mid \]
+\[2\ euros/km\ recorrido\]
+
+Para calcular el beneficio total del estado empezamos en la petición: Con la fórmula del precio de una petición según los días conseguimos ganancias. Una vez tenemos este valor y con el origen de coordenadas inicial de donde sale el camión y las dos peticiones del viaje podemos saber el beneficio total de cada viaje contando también las pérdidas por los kilómetros recorridos. Si sumamos todos los beneficios de todos los viajes de todos los camiones conseguimos el beneficio total.
+
+\[
+\sum_{i=1}^{n}Truck(i)
+\]
+\[
+Truck(i)=\sum_{j=1}^{5}Trip(j)
+\]
+\[
+Trip(i)= Request_{1} + Request_{2} - Loss_{km}
+\]
+
+En el heurístico usado también tiene en cuenta el beneficio que se ganaría el con las peticiones sin atender si se cumplieran el próximo día. Todas las peticiones que no se atienden se resuelven al día siguiente, según el enunciado del problema. Para el experimento especial esto no se tiene en cuenta.
+
+La función de \code{State.getTotalProfit(): Double} hace este calcula para una instancia de un estado.
+
 \subsubsection{Factores que intervienen}
 
+En el cálculo del beneficio intervienen la \textbf{distancia recorrida} por el camión, que se puede pasar de distancia a dinero sabiendo que 1$km$ equivale a un gasto de 2, el \textbf{beneficio aportado} al abastecer una gasolinera y el número de \textbf{días} que lleva la \textbf{petición}.
+
+Para el heurístico del experimento especial no se necesitaba tener en cuenta la suposición que las peticiones sin solventar serían atendidas el día siguiente, por lo que solo se maximizan los beneficios de las peticiones de ese mismo día.
+
 \subsection{Estado inicial} %Elección y generación del estado inicial
+
+El estado inicial es un estado ya completo, con todos los camiones llenos. Tiene que ser de esta manera, si no necesitaríamos más operadores para poder añadir nuevas peticiones o viajes al espacio de búsqueda. Peticiones que son definidas inicialmente en el problema pero que en el estado inicial no están en ningún camión no fantasma.
+
+Teniendo en cuenta que las peticiones no se pueden cambiar de viaje (recordamos que nuestro operador intercambia \textbf{viajes} entre camiones y un viaje es un \textbf{par de peticiones}) las parejas de peticiones de un viaje han de ser lo mejor posible.
+
+Por ese motivo, al principio de todo cogemos las peticiones de las mismas gasolineras y las juntamos por parejas. Las peticiones sobrante las juntamos entre ellas con la más próxima. Así conseguimos la mínima perdida por kilómetro recorrido. Es cierto que puede ser que, al juntar por parejas las peticiones de esta forma, haya peticiones de hace muchos días, es decir, que aportan muy poco beneficio, pero teniendo en cuenta que también es importante el \textbf{beneficio del día siguiente}, aceptamos esta característica del estado inicial
 
 \section{Experimentos}
 %Cada section es un experimento.
 	%Influencia de la solución inicial
 	%Influencia de los operadores
 	%Influencia de la función haurística
-	%Comparación de algoritmos
+	%Comparación de algoritmos8
 	%Escenarios propuestos y preguntas del enunciado
+	
+\subsection{Experimento 1} \label{ssec:exp1}
+
+\emph{(A continuación se explican los experimentos 1 y 2)}
+
+\hfill
+
+Para generar una solución inicial según los criterios de calidad del apartado 3.1 (del enunciado de la práctica) lo que hacemos es lo siguiente
+
+Primero, agrupamos por parejas (para formar viajes) el máximo número de peticiones que pertenecen a una misma gasolinera, luego repartimos estos viajes entre los camiones de manera que no se incumpla ninguna restricción. Cuando ya tenemos los viajes asignados a camiones repartimos las peticiones que nos quedaron sin agrupar anteriormente. En caso de que no tengamos suficientes camiones para atender a todas las peticiones generamos camiones fantasma (\emph{Ghost Trucks}) para simular que tenemos suficientes camiones.
+
+Lo que representan estos \emph{Ghost Trucks} son las peticiones que se atenderán al día siguiente. En el caso de que un viaje no aporte beneficio para ningún camión, éste será asignado a un \emph{Ghost Trucks}.
+
+Esta manera de generar la solución inicial nos permite evitarnos operadores como \code{add request} o \code{remove request}, o \code{add trip} o \code{remove trip}, que lo único que harían es aumentar exponencialmente la ramificación al generar estados sucesores.
+
+Una vez hemos hecho esto ya tendríamos una posible solución a nuestro problema, aunque no podríamos asegurar que es la mejor solución.
+
+Para mejorar esta solución pensamos en implementar un único operador (\code{swapTrip(...)}) que nos permite intercambiar viajes entre camiones (también entre \emph{Ghost Trucks}) para encontrar una asignación de viajes distinta que nos aporte más beneficio.
+
+\subsection{Experimento 2}
+
+\emph{(Ver: \ref{ssec:exp1}. Experimento 1)}
+
+\subsection{Experimento 3}
+
+Para encontrar una solución óptima con Simulated Annealing, a diferencia de Hill Climbing, no le obligamos directamente a buscar una mejora en el beneficio al hacer el swap de viajes entre camiones, de esta manera dejamos que el algoritmo explore estados sucesores mejores y peores que el inicial. Esto, lógicamente, repercute en el tiempo de ejecución pero conseguimos obtener más beneficio que con el algoritmo Hill Climbing para un mismo escenario
+
+\subsection{Experimento 4}
+
+\subsection{Experimento 5}
+
+Para comprobar cuál es el efecto que tiene dividir en dos la cantidad de centros de distribución pero doblando la cantidad de camiones por centro (en otras palabras 2) hemos primero probado nuestra situación inicial. 
+
+Como hipótesis tenemos que no influirá demasiado en el beneficio, ya que la cantidad de camiones será la misma por tanto en número de peticiones será de esperar que sea similar. Posiblemente será un beneficio ligeramente menor, ya que la distancia a recorrer de algunos de los camiones será mayor.
+
+\hfill
+
+Con 10 centros de distribución, 1 camión por centro, 100 gasolineras y la semilla 1234. Esto nos proporciona el beneficio \textbf{95672.00}. 
+
+Ahora cambiado los parámetros del problema a 5 centros, 10 camiones y 100 gasolineras, con la misma semilla tenemos un beneficio de \textbf{93512.00}. 
+
+\hfill
+
+Se nos hace lógica esta respuesta, ya que la cantidad de peticiones que se puedan resolver será prácticamente la misma (en este caso exactamente la misma), porque  la cantidad de camiones es la misma. Ahora bien, hay en el segundo caso se obtiene menos beneficio en el primero, y esto es debido a que el terreno acaparado por 5 centros de distribución es menor al terreno que acaparan 10, por tanto habrá camiones que tendrán que hacer viajes más largos que si hubiese un centro de distribución más cercano a esas gasolineras.
+
+
+\subsection{Experimento 6}
+
+En este experimento queremos ver la relación que hay entre el coste por kilómetro y la cantidad de peticiones servidas.
+
+Como hipótesis creemos que lo obvio es que a medida que aumente el coste del kilómetro aumentará el número de peticiones no servidas.
+
+Hemos usado la situación del experimento especial con 10 centros de distribución, 100 gasolineras y la semilla 1234. Hemos usado Hill-Climbing y nuestro heurístico 2.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}lllll@{}}
+\textbf{Coste por kilómetro} & \textbf{Beneficio generado} & \textbf{Peticiones no resueltas} \\ \hline
+\multicolumn{1}{|c|}{2} & \multicolumn{1}{c|}{95672} & \multicolumn{1}{c|}{26} \\ \hline
+\multicolumn{1}{|c|}{4} & \multicolumn{1}{c|}{91236} & \multicolumn{1}{c|}{26} \\ \hline
+\multicolumn{1}{|c|}{8} & \multicolumn{1}{c|}{82996} & \multicolumn{1}{c|}{26} \\ \hline
+\multicolumn{1}{|c|}{16} & \multicolumn{1}{c|}{66652} & \multicolumn{1}{c|}{26} \\ \hline
+\multicolumn{1}{|c|}{32} & \multicolumn{1}{c|}{36784} & \multicolumn{1}{c|}{38} \\ \hline
+\multicolumn{1}{|c|}{64} & \multicolumn{1}{c|}{10424} & \multicolumn{1}{c|}{96} \\ \hline
+\multicolumn{1}{|c|}{128} & \multicolumn{1}{c|}{5440} & \multicolumn{1}{c|}{118} \\ \hline
+\multicolumn{1}{|c|}{256} & \multicolumn{1}{c|}{4020} & \multicolumn{1}{c|}{122} \\ \hline
+\multicolumn{1}{|c|}{512} & \multicolumn{1}{c|}{4020} & \multicolumn{1}{c|}{122} \\ \hline
+\end{tabular}
+\caption{Experimento 6}
+\label{exp-6}
+\end{table}
+
+\includegraphics[scale=0.55]{plot6}
+
+
+
+\subsection{Experimento 7}
 
 
   
