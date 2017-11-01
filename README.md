@@ -2,7 +2,7 @@
 
 Raúl García, David Williams, Fèlix Arribas
 
-## Ejecuta el progama
+## Ejecuta el progama
 
 Escribe en tu terminal:
 
