@@ -17,42 +17,53 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-
-        Scanner capt = new Scanner(System.in);
-
+        int ncen = 0;
+        int ntruck = 0;
+        int ngas = 0;
+        int seed = 0;
         int heuristic = 0;
         int search  = 0;
 
-        System.out.println("Specify number of Centers:");
-        int ncen = capt.nextInt();
+        if (args.length != 6) {
+            Scanner capt = new Scanner(System.in);
 
-        System.out.println("Specify number of trucks per Center:");
-        int ntruck = capt.nextInt();
+            System.out.println("Specify number of Centers:");
+            ncen = capt.nextInt();
 
-        System.out.println("Specify number of Petrol Stations:");
-        int ngas = capt.nextInt();
+            System.out.println("Specify number of trucks per Center:");
+            ntruck = capt.nextInt();
 
-        System.out.println("Specify the Seed:");
-        int seed = capt.nextInt();
+            System.out.println("Specify number of Petrol Stations:");
+            ngas = capt.nextInt();
 
-        while (heuristic != 1 && heuristic != 2) {
-            System.out.println("Specify the Heuristic Function: today's profit (1) or today's and tomorrow's profit (2)");
-            heuristic = capt.nextInt();
+            System.out.println("Specify the Seed:");
+            seed = capt.nextInt();
+
+            while (heuristic != 1 && heuristic != 2) {
+                System.out.println("Specify the Heuristic Function: today's profit (1) or today's and tomorrow's profit (2)");
+                heuristic = capt.nextInt();
+            }
+
+            while (search != 1 && search != 2) {
+                System.out.println("Specify the Search Method: Hill Climbing (1) or Simulated Annealing (2)");
+                search = capt.nextInt();
+            }
+        } else {
+            ncen = Integer.parseInt(args[0]);
+            ntruck = Integer.parseInt(args[1]);
+            ngas = Integer.parseInt(args[2]);
+            seed = Integer.parseInt(args[3]);
+            heuristic = Integer.parseInt(args[4]);
+            search  = Integer.parseInt(args[5]);
         }
 
-        while (search != 1 && search != 2) {
-            System.out.println("Specify the Search Method: Hill Climbing (1) or Simulated Annealing (2)");
-            search = capt.nextInt();
-        }
+        System.out.println("Starting local search...");
 
         long initTime = System.currentTimeMillis();
 
         Gasolineras gasolineras = new Gasolineras(ngas, seed);
         CentrosDistribucion centrosDistribucion = new CentrosDistribucion(ncen, ntruck, seed);
         State state = State.simpleInitialState(centrosDistribucion, gasolineras);
-
-        //print(gasolineras);
-        //print(centrosDistribucion);
 
         Problem problem;
         Search typeOfSearch;
@@ -74,14 +85,8 @@ public class Main {
         }
 
         problem = new Problem(state, successorFunction, new GasolinaGoalTest(), heuristicFunction);
-
         SearchAgent agent = new SearchAgent(problem, typeOfSearch);
-
         State goalState = (State) typeOfSearch.getGoalState();
-
-        System.out.println();
-        //printInstrumentation(agent.getInstrumentation());
-        //goalState.print();
 
         switch (heuristic) {
             case 1:

@@ -170,7 +170,7 @@ public class State {
         Double profitTomorrow = todayAndTomorrowProfit - todayProfit;
         System.out.println("Total Profit for today = " + todayProfit);
         System.out.println("Profit for tomorrow = " + profitTomorrow);
-        System.out.println("Petitions answered next day = " + todayAndTomorrowProfit);
+        System.out.println("Total profit = " + todayAndTomorrowProfit);
     }
     public State clone() {
         ArrayList<Truck> clonedTrucks = new ArrayList<>();
