@@ -7,6 +7,7 @@ import model.Truck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class GasolinaSuccessorFunctionSA implements SuccessorFunction {
@@ -15,23 +16,26 @@ public class GasolinaSuccessorFunctionSA implements SuccessorFunction {
         ArrayList<Successor> successors = new ArrayList<>();
         State state = (State) o;
 
-        for (int i = 0; i < state.getTrucksSize(); i++) {
-            Truck truck = state.getTruckAt(i);
-            for (int j = 0; j < truck.getTripsSize(); j++) {
-                for (int k = i; k < state.getTrucksSize(); k++) {
-                    Truck truck2 = state.getTruckAt(k);
-                    for (int l = 0; l < truck2.getTripsSize(); l++) {
-                        State newState = state.clone();
-                        newState.swapTrip(i, j, k, l);
-                        successors.add(new Successor(
-                                "Swap trip " + j + " from truck " + i + " with trip " + l + " from truck " + k,
-                                newState
-                        ));
-                    }
-                }
-            }
+        int i = randomNumber(state.getTrucksSize());
+        int j = randomNumber(state.getTruckAt(i).getTripsSize());
+
+        int k = i;
+        while (k == i) {
+            k = randomNumber(state.getTrucksSize());
         }
+        int l = randomNumber(state.getTruckAt(k).getTripsSize());
+
+        State newState = state.clone();
+        newState.swapTrip(i, j, k, l);
+        successors.add(new Successor(
+                "Swap trip " + j + " from truck " + i + " with trip " + l + " from truck " + k,
+                newState
+        ));
 
         return successors;
+    }
+
+    private static int randomNumber(int max) {
+        return new Random().nextInt(max);
     }
 }
